@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+Assessment History
+{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <p class="eyebrow">SAVED RECORDS</p>
+
+    <h1>Assessment History</h1>
+
+    <p>
+        Your latest 30 saved assessment records.
+    </p>
+
+</section>
+
+
+<section class="content-card">
+
+    {% if rows %}
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Assessment ID</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Report</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in rows %}
+
+                        <tr>
+
+                            <td>{{ row.id }}</td>
+
+                            <td>{{ row.product_name }}</td>
+
+                            <td>{{ row.category }}</td>
+
+                            <td>{{ row.score }}/100</td>
+
+                            <td>{{ row.status }}</td>
+
+                            <td>{{ row.created_at }}</td>
+
+                            <td>
+                                <a href="{{ url_for('download_report', assessment_id=row.id) }}">
+                                    Download
+                                </a>
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <p>
+            No assessments have been saved yet.
+        </p>
+
+        <a href="{{ url_for('home') }}">
+            Start your first assessment.
+        </a>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

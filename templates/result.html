@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}
+Assessment Result
+{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <p class="eyebrow">ASSESSMENT COMPLETE</p>
+
+    <h1>Your preliminary assessment</h1>
+
+    <p>
+        Review the result and observations below.
+    </p>
+
+</section>
+
+
+<section class="result-hero">
+
+    <div class="score-circle">
+        <div>
+            <strong>{{ assessment.score }}</strong>
+            <span>/ 100</span>
+        </div>
+    </div>
+
+    <div class="result-summary">
+
+        <p class="eyebrow">ASSESSMENT STATUS</p>
+
+        <h2 class="{{ assessment.status_class }}">
+            {{ assessment.status }}
+        </h2>
+
+        <p>
+            Assessment ID:
+            <strong>{{ assessment_id }}</strong>
+        </p>
+
+        <p>Created: {{ created_at }}</p>
+
+        <p class="review-note">
+            Human review is recommended before making
+            any export-related decision.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="content-card">
+
+    <h2>Product Information</h2>
+
+    <div class="details-grid">
+
+        <div>
+            <small>Product Name</small>
+            <strong>{{ product.name }}</strong>
+        </div>
+
+        <div>
+            <small>Category</small>
+            <strong>{{ product.category }}</strong>
+        </div>
+
+        <div>
+            <small>Destination</small>
+            <strong>{{ product.destination or "Not provided" }}</strong>
+        </div>
+
+        <div>
+            <small>Batch Number</small>
+            <strong>{{ product.batch_number or "Not provided" }}</strong>
+        </div>
+
+        <div>
+            <small>Net Weight</small>
+            <strong>{{ product.net_weight or "Not provided" }}</strong>
+        </div>
+
+        <div>
+            <small>Country of Origin</small>
+            <strong>{{ product.country_origin or "Not provided" }}</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="content-card">
+
+    <h2>Checks Performed</h2>
+
+    {% for check in assessment.checks %}
+
+        <div class="check-row">
+
+            <span class="check-dot
+                {{ 'passed' if check.passed else 'not-passed' }}">
+
+                {{ '✓' if check.passed else '!' }}
+
+            </span>
+
+            <div>
+
+                <strong>{{ check.name }}</strong>
+
+                <p>{{ check.result }}</p>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+
+<section class="content-card">
+
+    <h2>Observations and Possible Issues</h2>
+
+    <ul class="observations">
+
+        {% for item in assessment.observations %}
+
+            <li>{{ item }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+</section>
+
+
+<section class="content-card">
+
+    <h2>Text Extracted from Images</h2>
+
+    {% if extracted_text %}
+
+        <pre class="ocr-text">{{ extracted_text }}</pre>
+
+    {% else %}
+
+        <p>
+            No readable text was extracted.
+            Check the image or install Tesseract OCR.
+        </p>
+
+    {% endif %}
+
+</section>
+
+
+<div class="action-row">
+
+    <a class="button button-primary"
+       href="{{ url_for('download_report', assessment_id=assessment_id) }}">
+
+        Download PDF Report ↓
+
+    </a>
+
+    <a class="button button-outline"
+       href="{{ url_for('home') }}">
+
+        New Assessment
+
+    </a>
+
+    <a href="{{ url_for('history') }}">
+        Assessment History
+    </a>
+
+</div>
+
+
+<div class="notice">
+
+    <strong>Disclaimer:</strong>
+
+    This is a preliminary academic assessment.
+    It is not an official government certificate,
+    legal opinion or guarantee of export eligibility.
+
+</div>
+
+{% endblock %}

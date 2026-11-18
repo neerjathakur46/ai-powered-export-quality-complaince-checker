@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home | Export Quality Checker
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-copy">
+
+        <p class="eyebrow">
+            SMARTER PRE-EXPORT PREPARATION
+        </p>
+
+        <h1>
+            Check your product information
+            before the export process.
+        </h1>
+
+        <p class="lead">
+            Submit product details and packaging images
+            to receive a preliminary assessment using
+            image checks, OCR and predefined rules.
+        </p>
+
+        <a class="button button-light" href="#assessment-form">
+            Start checking →
+        </a>
+
+    </div>
+
+</section>
+
+
+<div class="notice">
+
+    <strong>Important:</strong>
+
+    This academic prototype provides guidance only.
+    It does not issue an official certificate or confirm
+    legal export eligibility.
+
+</div>
+
+
+<section class="section-heading" id="assessment-form">
+
+    <p class="eyebrow">NEW ASSESSMENT</p>
+
+    <h2>Product details and image upload</h2>
+
+    <p>
+        Complete the required fields and upload clear
+        product or packaging photographs.
+    </p>
+
+</section>
+
+
+<form class="form-card"
+      action="{{ url_for('assess') }}"
+      method="POST"
+      enctype="multipart/form-data">
+
+    <div class="form-grid">
+
+        <label>
+            Product name *
+
+            <input type="text"
+                   name="product_name"
+                   placeholder="Example: Packaged mango pulp"
+                   required>
+        </label>
+
+
+<label>
+    Select Product *
+
+    <select name="category" required>
+
+        <option value="">
+            Choose your product
+        </option>
+
+        <option value="Fresh Mangoes">
+            Fresh Mangoes
+        </option>
+
+        <option value="Cotton T-Shirts">
+            Cotton T-Shirts
+        </option>
+
+        <option value="Bluetooth Speaker">
+            Bluetooth Speaker
+        </option>
+
+        <option value="Turmeric Powder">
+            Turmeric Powder
+        </option>
+
+    </select>
+</label>
+
+        <label>
+            Export destination
+
+            <input type="text"
+                   name="destination"
+                   placeholder="Example: UAE">
+        </label>
+
+
+        <label>
+            Batch / lot number
+
+            <input type="text"
+                   name="batch_number"
+                   placeholder="Example: LOT-2026-01">
+        </label>
+
+
+        <label>
+            Net weight / quantity
+
+            <input type="text"
+                   name="net_weight"
+                   placeholder="Example: 500 g">
+        </label>
+
+
+        <label>
+            Country of origin
+
+            <input type="text"
+                   name="country_origin"
+                   placeholder="Example: India">
+        </label>
+
+    </div>
+
+
+    <div class="upload-area">
+
+        <h3>
+            Upload product or packaging images
+        </h3>
+
+        <p>
+            PNG, JPG, JPEG or WEBP.
+            Maximum 5 images.
+        </p>
+
+        <input type="file"
+               name="images"
+               accept=".png,.jpg,.jpeg,.webp"
+               multiple
+               required>
+
+    </div>
+
+
+    <button class="button button-primary submit-button"
+            type="submit">
+
+        Submit for assessment →
+
+    </button>
+
+</form>
+
+{% endblock %}
